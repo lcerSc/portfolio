@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Portfolio — Deployment</title>
+  <style>body{font-family:Inter,system-ui,Arial;margin:3rem;background:#f6fbff;color:#02203c}a{color:#0466c8}</style>
+</head>
+<body>
+  <h1>Portfolio</h1>
+  <p>This repository contains a Streamlit portfolio app. The app is a Python application and cannot run directly on GitHub Pages.</p>
+  <p>What was added:</p>
+  <ul>
+    <li>CI workflow (syntax check)</li>
+    <li>Docker publish workflow to GitHub Container Registry (GHCR)</li>
+    <li>GitHub Pages deploy workflow (publishes this docs folder)</li>
+  </ul>
+  <p>To run the app locally:</p>
+  <pre>venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+streamlit run app.py</pre>
+  <p>To deploy the app you can:</p>
+  <ul>
+    <li>Use Streamlit Cloud and connect this repository</li>
+    <li>Use the Docker image published to GHCR to deploy to a container host</li>
+  </ul>
+</body>
+</html>

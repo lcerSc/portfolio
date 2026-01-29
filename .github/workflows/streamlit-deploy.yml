@@ -1,0 +1,33 @@
+name: Deploy to Streamlit Cloud
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Trigger Streamlit Cloud deployment
+        env:
+          STREAMLIT_API_TOKEN: ${{ secrets.STREAMLIT_API_TOKEN }}
+          STREAMLIT_APP_ID: ${{ secrets.STREAMLIT_APP_ID }}
+        run: |
+          if [ -z "$STREAMLIT_API_TOKEN" ] || [ -z "$STREAMLIT_APP_ID" ]; then
+            echo "Missing STREAMLIT_API_TOKEN or STREAMLIT_APP_ID secrets. See README for instructions.";
+            exit 1;
+          fi
+
+          echo "Triggering Streamlit deployment for app ID: $STREAMLIT_APP_ID"
+
+          curl -s -X POST "https://api.streamlit.cloud/v1/apps/${STREAMLIT_APP_ID}/deployments" \
+            -H "Authorization: Bearer $STREAMLIT_API_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d '{"source":"git","ref":"refs/heads/main"}' \
+            -o /tmp/streamlit-deploy-response.json
+
+          echo "Response:" && cat /tmp/streamlit-deploy-response.json || true
